@@ -15,10 +15,11 @@ case "$1" in
 
 
 		echo "${bold}DESCRIPTION${normal}"
-		echo -e "\tProgram parse urls by regular expression with using pipelines embeded in Linux.";
+		echo -e "\tProgram parse urls by regular expression and put into stdout.";
 		echo -e "\tShort paths are replace complete URL to destination. For example:";
 		echo -e "\tWhen you have web site \"www.books.com\" and short URL \"/favorite.html\",";
-		echo -e "\tprogram supersede base url with comlete url and result is \"www.books.com/favorie.html\"";
+		echo -e "\tprogram supersede base url with comlete url and result is:";
+		echo -e "\t\"www.books.com/favorie.html\""
 
 		echo "";
 
