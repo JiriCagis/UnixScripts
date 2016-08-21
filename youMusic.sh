@@ -17,9 +17,13 @@ case "$1" in
 		echo "${bold}DESCRIPTION${normal}"
 		echo -e "\tThis script connect to Youtube server and download determinate video";
 		echo -e "\tdefined by URL in CSV file. After downloaded, Script convert video to";
-		echo -e "\tmp4 file. Bit-rate Mp4 file is set on 192kb/s. For right working ";
-		echo -e "\tyou must install youtube-dl library. If you use debian distribution,"
-		echo -e "\ttype to terminal: sudo apt-get install youtube-dl ffmpeg "
+		echo -e "\tmp3 file. Bit-rate Mp3 file is set on 192kb/s. Script use advantage ";
+		echo -e "\tmulti-core processors and it divide convert to many available cores."
+		echo -e "\tFor right working you must have below written library in your system."
+		echo "";
+		echo -e "\tDEPENDECIES:";
+		echo -e "\t\t youtube-dl ffmpeg";
+		echo -e "\t\t parallel"
 		echo ""; 
 		echo -e "\tINPUT:";
 		echo -e "\t\tCSV file formated by: album_name;song_name;url_to_song";
@@ -50,12 +54,21 @@ case "$1" in
 	;;
 	*)
 		mkdir Music
+		cat $1 | grep -v '^\s*$' | parallel xargs -L 1 -d '\n' youMusic_parser.sh;
+
+		count_errors=$(cat Music/log.txt | grep -o "ERROR" | wc -l);
+
+		echo "-----------------------------------------------------------------------"
+		if [ $count_errors == 0 ]
+		then
+			echo "Success download all music :)";
+		else
+			echo "Download not complete :( for detail about errors see Music/log.txt";
+		fi
+		echo "-----------------------------------------------------------------------"
+
+		# SERIAL VERSION for case when not available framework parallel for your system
 		#cd Music
-
-
-		cat $1 | grep -v '^\s*$' | parallel xargs -L 1 -d '\n' you_music_parser.sh;
-
-
 		#csv_file=$1;
 		#lines=$(cat $1 | grep -v '^\s*$');
 		#mkdir Music
