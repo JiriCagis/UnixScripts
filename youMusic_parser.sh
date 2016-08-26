@@ -13,7 +13,7 @@ else
 					--playlist-items 1 \
 					--extract-audio \
 					--audio-format mp3 \
-					--audio-quality 168k \
+					--audio-quality 192k \
 					--prefer-ffmpeg ${url} 2>&1);
 	
 	if [[ $message == *"ERROR"* ]]
