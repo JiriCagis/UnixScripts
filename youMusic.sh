@@ -3,6 +3,27 @@ PROGRAM_NAME="youMusic"
 VERSION="1.0"
 DATE="21.8.2016"
 
+# When using programs that use GNU Parallel to process data for publication please cite:
+#
+# @article{Tange2011a,
+#  title = {GNU Parallel - The Command-Line Power Tool},
+#  author = {O. Tange},
+#  address = {Frederiksberg, Denmark},
+#  journal = {;login: The USENIX Magazine},
+#  month = {Feb},
+#  number = {1},
+#  volume = {36},
+#  url = {http://www.gnu.org/s/parallel},
+#  year = {2011},
+#  pages = {42-47}
+# }
+#
+# (Feel free to use \nocite{Tange2011a})
+#
+# This helps funding further development.
+#
+# Or you can get GNU Parallel without this requirement by paying 10000 EUR.
+
 case "$1" in 
 	"--h") 
 		#define styles
@@ -53,7 +74,10 @@ case "$1" in
 		echo "Version $VERSION written by Jiri Caga $DATE";
 	;;
 	*)
-		mkdir Music
+		mkdir -p Music;
+		echo "" > Music/log.txt #init log file
+
+		parallel --bibtex # need show citation when you avoid pay fee 
 		cat $1 | grep -v '^\s*$' | parallel xargs -L 1 -d '\n' youMusic_parser.sh;
 
 		count_errors=$(cat Music/log.txt | grep -o "ERROR" | wc -l);
