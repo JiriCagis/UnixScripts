@@ -10,7 +10,7 @@ then
 	echo "INFO: Exists song $album/$song in Music folder." | tee -a Music/log.txt;
 else
 	message=$(youtube-dl --output "Music/${album}/${song}.%(ext)s" \
-					--playlist-items 1 \
+					--no-playlist \
 					--extract-audio \
 					--audio-format mp3 \
 					--audio-quality 192k \
